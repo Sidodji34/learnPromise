@@ -1,14 +1,14 @@
 const INPUT = document.querySelector('.input');
 const SUBMIT = document.querySelector('.submit');
 const OUTPUT = document.querySelector('.output');
-SUBMIT.addEventListener('submit', isResponse);
+const serverUrl = "https://api.genderize.io";
+SUBMIT.addEventListener('click', isResponse);
 function isResponse() {
-    const firstName = INPUT.value;
-    const serverUrl = "https://api.genderize.io";
-    const url = `${serverUrl}?name="${firstName}`;
-        getAnswer
-        .then(() => {
-            let json = response.text()
-            console.log(json);
-        })
+    event.preventDefault();
+    firstName = INPUT.value;
+    const url = `${serverUrl}?name=${firstName}`;
+    const request = fetch(url);
+     let answer = request.then((response) => response.json());
+     answer.then((result) => OUTPUT.textContent = `${firstName} - ${result.gender}`);
+     INPUT.value = '';
 };
